@@ -1359,13 +1359,11 @@ class PPOTrainer(BaseTrainer):
             logs["env/reward_std"] = torch.std(rewards).cpu().numpy().item()
             logs["env/reward_dist"] = rewards.cpu().numpy()
 
-            if self.config.log_with == "tensorboard":
-                # update the current step
-                self.current_step += 1
+            self.current_step += 1
 
             self.accelerator.log(
                 logs,
-                step=self.current_step if self.config.log_with == "tensorboard" else None,
+                step=self.current_step,
             )
 
         else:
